@@ -113,7 +113,7 @@ func (generator *UuidGenerator) NewUuidGenTime() *Uuid {
 
 func (generator *UuidGenerator) NewUuidGenRandom() *Uuid {
 	var cass_uuid C.struct_CassUuid_
-	C.cass_uuid_gen_random(generator.cptr, uuid.cptr)
+	C.cass_uuid_gen_random(generator.cptr, &cass_uuid)
 	uuid := new(Uuid)
 	uuid.cptr = &cass_uuid
 	return uuid
@@ -121,7 +121,7 @@ func (generator *UuidGenerator) NewUuidGenRandom() *Uuid {
 
 func (generator *UuidGenerator) NewUuidFromTime(timestamp uint64) *Uuid {
 	var cass_uuid C.struct_CassUuid_
-	C.cass_uuid_gen_from_time(generator.cptr, C.cass_uint64_t(timestamp), uuid.cptr)
+	C.cass_uuid_gen_from_time(generator.cptr, C.cass_uint64_t(timestamp), &cass_uuid)
 	uuid := new(Uuid)
 	uuid.cptr = &cass_uuid
 	return uuid
