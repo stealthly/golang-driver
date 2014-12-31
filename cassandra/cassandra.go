@@ -104,8 +104,10 @@ func NewUuidGeneratorWithNode(node uint64) *UuidGenerator {
 }
 
 func (generator *UuidGenerator) NewUuidGenTime() *Uuid {
+	var cass_uuid C.struct_CassUuid_
+	C.cass_uuid_gen_time(generator.cptr, &cass_uuid)
 	uuid := new(Uuid)
-	C.cass_uuid_gen_time(generator.cptr, uuid.cptr)
+	uuid.cptr = &cass_uuid
 	return uuid
 }
 
