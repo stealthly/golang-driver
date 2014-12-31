@@ -9,9 +9,9 @@ func main() {
 	cluster := cassandra.NewCluster()
 	cluster.SetContactPoints("127.0.0.1")
 
-	sessionFuture := cluster.Connect()
-	sessionFuture.Wait()
-	session := sessionFuture.Session()
+	session := cassandra.NewSession()
+	future := cluster.SessionConnect(session)
+	future.Wait()
 
 	statement := cassandra.NewStatement("select cluster_name from system.local;", 0)
 	future := session.Execute(statement)
